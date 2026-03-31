@@ -5,6 +5,16 @@
 </p>
 
 <p align="center">
+  <a href="https://star-history.com/#instructkr/claw-code&Date">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=instructkr/claw-code&type=Date&theme=dark" />
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=instructkr/claw-code&type=Date" />
+      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=instructkr/claw-code&type=Date" width="600" />
+    </picture>
+  </a>
+</p>
+
+<p align="center">
   <img src="assets/clawd-hero.jpeg" alt="Claw" width="300" />
 </p>
 
@@ -173,17 +183,7 @@ Join the [**instructkr Discord**](https://instruct.kr/) — the best Korean lang
 
 ## Star History
 
-This repository became **the fastest GitHub repo in history to surpass 30K stars**, reaching the milestone in just a few hours after publication.
-
-<a href="https://star-history.com/#instructkr/claw-code&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=instructkr/claw-code&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=instructkr/claw-code&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=instructkr/claw-code&type=Date" />
-  </picture>
-</a>
-
-![Star History Screenshot](assets/star-history.png)
+See the chart at the top of this README.
 
 ## Ownership / Affiliation Disclaimer
 

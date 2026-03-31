@@ -338,6 +338,26 @@ fn format_resume_report(session_path: &str, message_count: usize, turns: u32) ->
     )
 }
 
+fn format_init_report(path: &Path, created: bool) -> String {
+    if created {
+        format!(
+            "Init
+  CLAUDE.md        {}
+  Result           created
+  Next step        Review and tailor the generated guidance",
+            path.display()
+        )
+    } else {
+        format!(
+            "Init
+  CLAUDE.md        {}
+  Result           skipped (already exists)
+  Next step        Edit the existing file intentionally if workflows changed",
+            path.display()
+        )
+    }
+}
+
 fn parse_git_status_metadata(status: Option<&str>) -> (Option<PathBuf>, Option<String>) {
     let Some(status) = status else {
         return (None, None);
@@ -949,15 +969,12 @@ fn init_claude_md() -> Result<String, Box<dyn std::error::Error>> {
     let cwd = env::current_dir()?;
     let claude_md = cwd.join("CLAUDE.md");
     if claude_md.exists() {
-        return Ok(format!(
-            "init: skipped because {} already exists",
-            claude_md.display()
-        ));
+        return Ok(format_init_report(&claude_md, false));
     }
 
     let content = render_init_claude_md(&cwd);
     fs::write(&claude_md, content)?;
-    Ok(format!("init: created {}", claude_md.display()))
+    Ok(format_init_report(&claude_md, true))
 }
 
 fn render_init_claude_md(cwd: &Path) -> String {
@@ -1367,7 +1384,7 @@ fn print_help() {
 #[cfg(test)]
 mod tests {
     use super::{
-        format_cost_report, format_model_report, format_model_switch_report,
+        format_cost_report, format_init_report, format_model_report, format_model_switch_report,
         format_permissions_report, format_permissions_switch_report, format_resume_report,
         format_status_report, normalize_permission_mode, parse_args, parse_git_status_metadata,
         render_config_report, render_init_claude_md, render_memory_report, render_repl_help,
@@ -1535,6 +1552,15 @@ mod tests {
         assert!(report.contains("Permissions updated"));
         assert!(report.contains("Previous         read-only"));
         assert!(report.contains("Current          workspace-write"));
+    }
+
+    #[test]
+    fn init_report_uses_structured_output() {
+        let created = format_init_report(Path::new("/tmp/CLAUDE.md"), true);
+        assert!(created.contains("Init"));
+        assert!(created.contains("Result           created"));
+        let skipped = format_init_report(Path::new("/tmp/CLAUDE.md"), false);
+        assert!(skipped.contains("skipped (already exists)"));
     }
 
     #[test]
